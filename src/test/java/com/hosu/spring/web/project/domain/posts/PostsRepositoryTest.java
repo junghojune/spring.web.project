@@ -14,9 +14,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class PostRepositoryTest {
+class PostsRepositoryTest {
     @Autowired
-    PostRepository postRepository;
+    PostsRepository postsRepository;
 
 
 
@@ -27,13 +27,13 @@ class PostRepositoryTest {
         String title = "테스트 게시글";
         String content = "테스트 - 본문";
 
-        postRepository.save(Posts.builder()
+        postsRepository.save(Posts.builder()
                         .title(title)
                         .content(content)
                         .author("hojune0904@gmail.com")
                 .build());
         //when
-        List<Posts> postsList = postRepository.findAll();
+        List<Posts> postsList = postsRepository.findAll();
 
         //then
         Posts posts = postsList.get(0);
@@ -44,13 +44,13 @@ class PostRepositoryTest {
     @Test
     public void BaseTimeEntity_add()    {
         LocalDateTime now = LocalDateTime.of(2022,11,30,0,0,0);
-        postRepository.save(Posts.builder()
+        postsRepository.save(Posts.builder()
                         .title("title")
                         .content("content")
                         .author("author")
                 .build());
 
-        List<Posts> postsList = postRepository.findAll();
+        List<Posts> postsList = postsRepository.findAll();
 
         Posts posts = postsList.get(0);
 

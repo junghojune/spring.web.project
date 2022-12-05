@@ -1,7 +1,7 @@
 package com.hosu.spring.web.project.web;
 
 import com.hosu.spring.web.project.service.posts.PostsService;
-import com.hosu.spring.web.project.web.dto.PostResponseDto;
+import com.hosu.spring.web.project.web.dto.PostsResponseDto;
 import com.hosu.spring.web.project.web.dto.PostsSaveRequestDto;
 import com.hosu.spring.web.project.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,13 @@ public class PostsApiController {
     }
 
     @GetMapping("/api/v1/posts/{id}")
-    public PostResponseDto findById(@PathVariable Long id){
+    public PostsResponseDto findById(@PathVariable Long id){
         return postsService.findById(id);
+    }
+
+    @DeleteMapping("/api/v1/posts/{id}")
+    public Long delete(@PathVariable Long id){
+        postsService.delete(id);
+        return id;
     }
 }

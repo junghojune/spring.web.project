@@ -1,6 +1,6 @@
 package com.hosu.spring.web.project.web;
 
-import com.hosu.spring.web.project.domain.posts.PostRepository;
+import com.hosu.spring.web.project.domain.posts.PostsRepository;
 import com.hosu.spring.web.project.domain.posts.Posts;
 import com.hosu.spring.web.project.web.dto.PostsSaveRequestDto;
 import com.hosu.spring.web.project.web.dto.PostsUpdateRequestDto;
@@ -20,7 +20,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -32,7 +31,7 @@ class PostsApiControllerTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    private PostRepository postRepository;
+    private PostsRepository postsRepository;
 
     @Test
     @DisplayName("게시글 저장")
@@ -51,7 +50,7 @@ class PostsApiControllerTest {
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
-        List<Posts> all = postRepository.findAll();
+        List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
     }
@@ -60,7 +59,7 @@ class PostsApiControllerTest {
     @DisplayName("게시글 수정")
     public void Post_update(){
         //given
-        Posts savedPosts = postRepository.save(Posts.builder()
+        Posts savedPosts = postsRepository.save(Posts.builder()
                         .title("title")
                         .content("content")
                         .author("author")
@@ -85,7 +84,7 @@ class PostsApiControllerTest {
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
-        List<Posts> all = postRepository.findAll();
+        List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
 
